@@ -1,291 +1,296 @@
 # 風之草原 · Painterly Meadow
 
-一個手繪動畫風格的自然漫遊沙盒，以 NPR（非寫實）繪本渲染呈現。
-你操控一個戴著草帽的小精靈，在隨風起伏的草原上奔跑、跳躍，撐開一片樹葉從山丘上滑翔而下。一路上可以搖晃樹木收集樹枝、敲石頭、摘花，蓋起小木屋和石燈籠，親手捏出山丘與池塘，再去尋找散落在世界各處的星之碎片。
+**English** | [繁體中文](README.zh-TW.md)
 
-整個世界由連續的 Simplex Noise 生成：柔和的山丘、不規則的湖岸、圓潤的樹冠、雲朵和建築，**沒有任何方塊或體素**。全部內容都在單一的 `index.html` 裡，不需要建置流程。
+A nature-wandering sandbox in a hand-painted animation style, rendered with NPR (non-photorealistic) storybook shading.
+You play a little straw-hatted spirit who runs and jumps across wind-swept meadows and glides down hillsides holding a leaf. Along the way you can shake trees for branches, tap rocks for stone, pick flowers, build huts and stone lanterns, sculpt your own hills and ponds, and hunt for star fragments scattered across the world.
 
-![白天的草原與湖泊](docs/screenshots/meadow-day.jpg)
+The whole world is generated from continuous Simplex noise: soft hills, irregular lakeshores, rounded tree canopies, clouds and buildings — **no blocks or voxels**. Everything lives in a single `index.html`; there is no build step.
+
+**▶ Play online:** https://malilion.github.io/Painterly-Meadow/
+
+![Meadow and lake in daytime](docs/screenshots/meadow-day.jpg)
 
 ---
 
-## 快速開始
+## Quick start
 
-### 直接開啟
+### Open directly
 
-用瀏覽器打開 `index.html` 即可。Three.js 透過 import map 從 jsDelivr CDN 載入，所以**需要連網**。
+Just open `index.html` in a browser. Three.js is loaded from the jsDelivr CDN through an import map, so **an internet connection is required**.
 
-### 使用靜態伺服器（建議）
+### Use a static server (recommended)
 
-部分瀏覽器對 `file://` 有較嚴格的限制，用任一靜態伺服器會更穩定：
+Some browsers restrict `file://` pages, so any static server is more reliable:
 
 ```bash
 # Python
 python3 -m http.server 8000
 
-# 或 Node.js
+# or Node.js
 npx serve .
 ```
 
-然後開啟 <http://localhost:8000/>。
+Then open <http://localhost:8000/>.
 
-### 指定地形種子
+### Choosing a terrain seed
 
-在網址加上 `?seed=` 即可重現同一座世界：
+Add `?seed=` to the URL to reproduce the same world:
 
 ```
 http://localhost:8000/?seed=325863
 ```
 
-- 數字會直接當作種子，其他文字（例如 `?seed=meadow`）會被雜湊成數字。
-- 不指定時會隨機產生一個種子。
-- 每次重建世界後，目前的種子會自動寫回網址列，複製網址就能分享同一座世界的地形。
-- 背包、建築、地形修改與星之碎片的進度是**每個種子各自一份**，存在瀏覽器的 `localStorage`，分享網址不會帶上這些進度。
+- Numbers are used as the seed directly; any other text (e.g. `?seed=meadow`) is hashed into a number.
+- Without a seed, a random one is generated.
+- After each world rebuild the current seed is written back to the address bar, so copying the URL shares the same terrain.
+- Backpack, buildings, terrain edits and star-fragment progress are saved **per seed** in the browser's `localStorage`; a shared URL does not carry that progress.
 
-### 環境需求
+### Requirements
 
-支援 WebGL 與 ES Module（import map）的瀏覽器，例如近期版本的 Chrome、Edge、Firefox、Safari。
-
----
-
-## 功能示範
-
-**線上試玩：** https://malilion.github.io/Painterly-Meadow/
-
-| 功能 | 示範 |
-| --- | --- |
-| 漫遊、奔跑、跳躍、旋轉視角 | ![explore](docs/demo/explore-run-jump.gif) |
-| 葉子滑翔 | ![glide](docs/demo/leaf-glide.gif) |
-| 採集（樹枝／石材／花朵） | ![gather](docs/demo/gather.gif) |
-| 建造、旋轉、拆除 | ![build](docs/demo/build.gif) |
-| 捏地形（抬升／下挖／整平） | ![sculpt](docs/demo/terrain-sculpt.gif) |
-| 風力大小 | ![wind](docs/demo/wind.gif) |
-| 時間（日出到夜晚） | ![time](docs/demo/time-of-day.gif) |
-| 日落色溫 | ![warmth](docs/demo/sunset-warmth.gif) |
-| Inverted Hull 描邊開關 | ![outline](docs/demo/outline-toggle.gif) |
-| 地形種子重設 | ![seed](docs/demo/seed-reseed.gif) |
+A browser with WebGL and ES modules (import maps), such as recent Chrome, Edge, Firefox or Safari.
 
 ---
 
-## 截圖展示
+## Feature demos
 
-| 採集：搖晃樹木拿到樹枝 | 建造模式：綠色預覽代表可以放置 |
+| Feature | Demo |
 | --- | --- |
-| ![採集](docs/screenshots/gather.jpg) | ![建造模式](docs/screenshots/build.jpg) |
-
-| 捏地形：抬升山丘、挖出池塘 | 傍晚的星之碎片 |
-| --- | --- |
-| ![捏地形](docs/screenshots/sculpt.jpg) | ![星之碎片](docs/screenshots/star.jpg) |
-
-入夜後，石燈籠、小木屋的圓窗和星之燈會亮起來：
-
-![入夜的小村落](docs/screenshots/village-dusk.jpg)
-
-撐開樹葉從湖邊滑翔：
-
-![葉子滑翔](docs/screenshots/leaf-glide.jpg)
-
-> 截圖使用種子 `325863`。
+| Explore, run, jump, rotate camera | ![explore](docs/demo/explore-run-jump.gif) |
+| Leaf glide | ![glide](docs/demo/leaf-glide.gif) |
+| Gathering (branches / stone / flowers) | ![gather](docs/demo/gather.gif) |
+| Build, rotate, demolish | ![build](docs/demo/build.gif) |
+| Terrain sculpting (raise / dig / flatten) | ![sculpt](docs/demo/terrain-sculpt.gif) |
+| Wind strength | ![wind](docs/demo/wind.gif) |
+| Time of day (dawn to night) | ![time](docs/demo/time-of-day.gif) |
+| Sunset color temperature | ![warmth](docs/demo/sunset-warmth.gif) |
+| Inverted-hull outline toggle | ![outline](docs/demo/outline-toggle.gif) |
+| Re-roll terrain seed | ![seed](docs/demo/seed-reseed.gif) |
 
 ---
 
-## 操作方式
+## Screenshots
 
-### 移動與採集
-
-| 按鍵 | 動作 |
+| Gathering: shake a tree for branches | Build mode: a green preview means you can place it |
 | --- | --- |
-| `W` `A` `S` `D` / 方向鍵 | 移動（以鏡頭方向為準） |
-| `Shift` | 奔跑 |
-| `Space` | 跳躍 |
-| 空中按住 `Space` | 撐開樹葉滑翔 |
-| `E` | 採集眼前的樹木、灌木、岩石或花朵 |
-| 滑鼠拖曳 | 旋轉視角 |
-| 滑鼠滾輪 | 拉近／拉遠鏡頭 |
+| ![Gathering](docs/screenshots/gather.jpg) | ![Build mode](docs/screenshots/build.jpg) |
 
-### 建造模式
-
-| 按鍵 | 動作 |
+| Sculpting: raise hills, dig ponds | A star fragment at dusk |
 | --- | --- |
-| `B` | 開關建造模式 |
-| `1`–`9` | 選擇建築或地形工具（在一般模式按下也會直接進入建造模式） |
-| 滑鼠移動 | 瞄準要放置或捏塑的地面 |
-| 滑鼠左鍵點一下 / `F` | 放置建築 |
-| 按住滑鼠左鍵 / 按住 `F` | 捏地形（選擇 7–9 號工具時） |
-| `R` | 旋轉建築 45° |
-| `X` | 拆除游標附近的建築（材料全數歸還） |
-| 滑鼠右鍵拖曳 | 在捏地形時旋轉視角 |
-| `Esc` | 離開建造模式 |
+| ![Sculpting](docs/screenshots/sculpt.jpg) | ![Star fragment](docs/screenshots/star.jpg) |
 
-### 控制面板（左上角）
+After dark, stone lanterns, the hut's round windows and star lamps light up:
 
-| 控制項 | 效果 |
-| --- | --- |
-| 🌬 風力大小 | 影響草叢擺動幅度、花瓣與蒲公英的飄移速度、雲的移動速度，以及滑翔時被風推送的力道 |
-| ☀ 時間 | 05:30–20:00，改變太陽軌跡、天空漸層、霧色與光線顏色；天色越暗，燈籠與星星越亮 |
-| 🎨 日落色溫 | 把整體光線往冷調（藍）或暖調（橙）偏移 |
-| 🌱 地形種子 | 輸入種子後按 `Enter` 套用，或按「🎲 重設」隨機產生新世界 |
-| 🧹 清除此世界存檔 | 把目前種子的背包、建築、地形修改與星之碎片紀錄全部重置 |
-| ✏ 描邊 | 開關角色、樹木、岩石與建築的 Inverted Hull 描邊 |
+![Village at night](docs/screenshots/village-dusk.jpg)
 
-面板右上角的「–」可以收合面板，右上角的背包會顯示目前的材料數量。
+Gliding on a leaf from the lakeside:
 
-> 目前只支援鍵盤與滑鼠操作。觸控裝置可以拖曳旋轉視角，但無法操控角色走動或建造。
+![Leaf glide](docs/screenshots/leaf-glide.jpg)
+
+> Screenshots use seed `325863`.
 
 ---
 
-## 玩法
+## Controls
 
-### 漫遊與滑翔
+### Movement and gathering
 
-- **漫遊**：角色會平滑貼合起伏的地形，走過草叢時會把草撥開，碰到樹幹、岩石和建築會被擋住。太陡的坡爬不上去，世界外圍由環山包圍。
-- **跳躍**：跳躍帶有輸入緩衝和「土狼時間」，從邊緣走出去後短時間內仍可起跳。落地時角色會有擠壓回彈的動畫。
-- **葉子滑翔**：在空中下落時按住空白鍵，小精靈會舉起一片大樹葉緩緩降落，並順著風向漂移。滑翔有耐力限制（約 2.8 秒），落地後會自動回復，畫面下方的耐力條會顯示剩餘量。
-- **戲水**：走進深水區時角色會浮在水面上，移動速度變慢，仍然可以跳起來。
+| Key | Action |
+| --- | --- |
+| `W` `A` `S` `D` / arrow keys | Move (relative to the camera) |
+| `Shift` | Run |
+| `Space` | Jump |
+| Hold `Space` in the air | Open a leaf and glide |
+| `E` | Gather the tree, bush, rock or flower in front of you |
+| Mouse drag | Rotate camera |
+| Mouse wheel | Zoom in / out |
 
-### 採集
+### Build mode
 
-走近可採集的東西時，畫面下方會出現提示，按 `E` 即可採集。
+| Key | Action |
+| --- | --- |
+| `B` | Toggle build mode |
+| `1`–`9` | Select a building or terrain tool (also enters build mode from normal play) |
+| Mouse move | Aim at the ground to place or sculpt |
+| Left click / `F` | Place building |
+| Hold left mouse / hold `F` | Sculpt terrain (with tools 7–9) |
+| `R` | Rotate building 45° |
+| `X` | Remove the building nearest the cursor (all materials refunded) |
+| Right-drag | Rotate camera while sculpting |
+| `Esc` | Leave build mode |
 
-| 對象 | 收穫 | 規則 |
+### Control panel (top left)
+
+| Control | Effect |
+| --- | --- |
+| 🌬 Wind strength | Affects grass sway, petal and dandelion drift, cloud speed and how hard the wind pushes you while gliding |
+| ☀ Time | 05:30–20:00; changes the sun path, sky gradient, fog and light color. The darker it gets, the brighter lanterns and stars glow |
+| 🎨 Sunset warmth | Shifts the overall lighting toward cool (blue) or warm (orange) |
+| 🌱 Terrain seed | Type a seed and press `Enter`, or press "🎲 Reroll" for a random new world |
+| 🧹 Clear this world's save | Resets the backpack, buildings, terrain edits and star fragments for the current seed |
+| ✏ Outline | Toggles the inverted-hull outline on the character, trees, rocks and buildings |
+
+The "–" button collapses the panel; the backpack at the top right shows your current materials.
+
+> Only keyboard and mouse are supported for now. On touch devices you can drag to rotate the camera, but you can't walk or build.
+
+---
+
+## Gameplay
+
+### Wandering and gliding
+
+- **Wandering**: the character smoothly hugs the rolling terrain, parts the grass as it walks, and is blocked by trunks, rocks and buildings. Slopes that are too steep can't be climbed, and a ring of mountains encloses the world.
+- **Jumping**: jumps have input buffering and "coyote time", so you can still jump shortly after walking off a ledge. Landings play a squash-and-stretch animation.
+- **Leaf glide**: hold Space while falling and the spirit raises a big leaf, drifting slowly down with the wind. Gliding has limited stamina (about 2.8 s) that refills on landing; a bar at the bottom of the screen shows what's left.
+- **Wading**: in deep water the character floats, moves more slowly and can still jump.
+
+### Gathering
+
+When you get close to something gatherable, a prompt appears at the bottom of the screen; press `E` to gather.
+
+| Target | Yield | Rule |
 | --- | --- | --- |
-| 🌳 闊葉樹／杉樹 | 🪵 樹枝 +2 | 樹會搖晃並灑落葉子，同一棵樹 20 秒後才能再搖 |
-| 🌿 灌木 | 🪵 樹枝 +1 | 12 秒後才能再撥 |
-| 🪨 岩石 | 🪨 石材 +1 | 每顆可敲 3 次，敲完會縮小，60 秒後恢復 |
-| 🌸 雛菊、金鳳花、波斯菊、薰衣草 | 🌸 花朵 +1 | 摘下的花 45 秒後會重新長出來 |
+| 🌳 Broadleaf / cedar tree | 🪵 Branch +2 | The tree shakes and drops leaves; the same tree can be shaken again after 20 s |
+| 🌿 Bush | 🪵 Branch +1 | Can be searched again after 12 s |
+| 🪨 Rock | 🪨 Stone +1 | Each rock can be tapped 3 times, shrinks when depleted, and recovers after 60 s |
+| 🌸 Daisy, buttercup, cosmos, lavender | 🌸 Flower +1 | Picked flowers regrow after 45 s |
 
-### 建造
+### Building
 
-按 `B` 進入建造模式後，畫面下方會出現工具列。滑鼠指到的地面會顯示建築的預覽：**綠色代表可以放置，紅色代表不行**，提示列會說明原因（太遠、在水裡、地面太陡、被樹擋住、材料不足等）。
+Press `B` to enter build mode and a toolbar appears at the bottom. The ground under the mouse shows a preview of the building: **green means it can be placed, red means it can't**, and the prompt explains why (too far, in water, too steep, blocked by a tree, not enough materials, etc.).
 
-| 編號 | 建築 | 材料 | 說明 |
+| # | Building | Cost | Notes |
 | --- | --- | --- | --- |
-| 1 | 木柵欄 | 🪵3 | 可以一段段接起來圍出小院子 |
-| 2 | 長椅 | 🪵4 | 圓木做的長椅 |
-| 3 | 花圃 | 🪵2 🌸4 | 種著會隨風搖曳的小花 |
-| 4 | 石燈籠 | 🪨4 | 入夜後會亮起暖光 |
-| 5 | 小木屋 | 🪵10 🪨6 | 茅草圓頂小屋，圓窗夜裡會亮 |
-| 6 | 星之燈 | ✨1 🪨2 | 頂端掛著旋轉的星星，需要一顆星之碎片 |
+| 1 | Wooden fence | 🪵3 | Chain segments together to enclose a little yard |
+| 2 | Bench | 🪵4 | A log bench |
+| 3 | Flower bed | 🪵2 🌸4 | Planted with little flowers that sway in the wind |
+| 4 | Stone lantern | 🪨4 | Glows warmly after dark |
+| 5 | Hut | 🪵10 🪨6 | A round thatched hut whose round windows light up at night |
+| 6 | Star lamp | ✨1 🪨2 | A spinning star on top; needs one star fragment |
 
-小木屋需要比較平坦的地面，可以先用「整平」工具處理。按 `X` 拆除建築時，材料會全數歸還。
+The hut needs fairly flat ground; smooth it first with the Flatten tool. Removing a building with `X` refunds all of its materials.
 
-### 捏地形
+### Terrain sculpting
 
-建造工具列的 7–9 號是地形筆刷，不需要材料。按住滑鼠左鍵（或 `F`）塗抹，地面上的圓圈代表筆刷範圍。
+Tools 7–9 on the build toolbar are terrain brushes and cost nothing. Hold the left mouse button (or `F`) to paint; the circle on the ground shows the brush area.
 
-| 編號 | 工具 | 效果 |
+| # | Tool | Effect |
 | --- | --- | --- |
-| 7 | ⛰️ 抬升 | 把地面堆高成小山丘 |
-| 8 | 🕳️ 下挖 | 往下挖；挖到水面以下就會變成池塘 |
-| 9 | 〰️ 整平 | 以按下時的中心高度為準把地面抹平 |
+| 7 | ⛰️ Raise | Piles the ground up into a small hill |
+| 8 | 🕳️ Dig | Digs down; below the water line it becomes a pond |
+| 9 | 〰️ Flatten | Smooths the ground to the height at the center where you started |
 
-地形改變後，草叢、花朵、樹木、建築和星之碎片都會重新貼合地面，地表會依新的坡度重新上色（陡坡會露出岩石），水深貼圖也會即時更新，沉入水中的草和樹會被隱藏。
+After the terrain changes, grass, flowers, trees, buildings and star fragments re-settle onto the ground, the surface is recolored for the new slope (steep slopes expose rock), the water-depth map updates live, and grass and trees that end up underwater are hidden.
 
-### 星之碎片
+### Star fragments
 
-每個世界大約藏著 12 顆會發光的星之碎片，走過去碰到就會收進背包：
+Each world hides about 12 glowing star fragments; walk into one to add it to your backpack:
 
-- **山頂**：在附近最高的地方，要爬上去。
-- **半空**：浮在離地約 3 公尺的地方，要跳起來或從高處滑翔過去。
-- **湖面**：浮在湖泊上方，可以游過去再跳，或從岸邊滑翔。
+- **Hilltops**: on the highest point nearby — you'll have to climb.
+- **Mid-air**: floating about 3 m above the ground — jump or glide over from somewhere high.
+- **Over lakes**: hovering above a lake — swim out and jump, or glide from the shore.
 
-星之碎片的光暈不受霧影響，從遠處也看得到，傍晚和夜裡會更亮。收集到的碎片可以用來建造星之燈；背包會顯示這個世界已經找到幾顆。
+Their glow ignores fog so you can spot them from afar, and they shine brighter at dusk and night. Collected fragments are used to build star lamps; the backpack shows how many you've found in this world.
 
-### 存檔
+### Saving
 
-背包、建築、地形修改與已找到的星之碎片會在每次變動後自動存到瀏覽器的 `localStorage`，並以種子區分。切換種子時會先保存目前的世界，回到同一個種子就會載入原本的進度。按面板上的「🧹 清除此世界存檔」可以讓世界回到最初的樣子。
-
----
-
-## 渲染技術
-
-### 地形與湖泊
-
-- 自行實作的可設定種子 2D Simplex Noise，以多層 fbm 疊加出連綿山丘，外圍再疊一圈環山。
-- 每個種子隨機挖出 2–3 座湖泊，湖岸半徑再用噪聲擾動成不規則形狀；零碎的淺窪會被填平，水只留在湖泊裡。
-- 角色的高度取樣與網格三角化使用完全相同的插值方式，所以角色不會浮空或陷進地面。
-- 地表顏色由頂點色依高度、坡度與噪聲混合（草地、花田、沙岸、岩石、湖床），再疊一張 Canvas 繪製的水彩筆觸貼圖。
-- 法線以有限差分計算，捏地形時只需要重算筆刷範圍內的頂點高度、法線、顏色與水深，其他系統也只更新受影響的區域。
-
-### 繪本感 Toon 著色
-
-- 全場景使用 `MeshToonMaterial`，搭配以 Canvas 繪製的自訂漸變貼圖（三段色階，交界處稍微柔化）。
-- `HemisphereLight` 的天空色與地面色調成紫藍色，陰影因此帶有溫暖的紫藍色調，而不是死黑。
-- 樹冠與雲朵的法線會朝整體中心「吹圓」，讓它們像一整團柔軟的色塊般受光。
-- 燈籠、窗戶與星星共用發光材質和加法混合的光暈 sprite，亮度隨天色自動調整。
-
-### Inverted Hull 描邊
-
-- 在 Vertex Shader 中沿法線外擴、只渲染背面，形成深褐色的柔和描邊。
-- 樹木與岩石的描邊網格直接共用本體的 `instanceMatrix`，所以搖晃動畫和縮放會同步到描邊。
-
-### 隨風搖曳的草叢
-
-- 數萬叢草葉與四種小花（雛菊、金鳳花、波斯菊、薰衣草）以 `InstancedMesh` 渲染，草叢分成 8×8 區塊以便視錐剔除。
-- 透過 `onBeforeCompile` 改寫 Vertex Shader：在世界空間計算一波波掃過草原的風浪、細碎抖動，以及角色經過時的推草效果。
-- 草葉法線朝上，讓草與地面同調受光；雙面渲染時不翻轉背面法線，避免背光面發黑。
-- 摘花或被水淹沒時，只把該個實例的矩陣縮成一點，不需要重建整個 `InstancedMesh`。
-
-### 動畫感水體
-
-- 頂點以多組正弦波起伏。
-- Fragment Shader 依風向偏移噪聲座標，畫出卡通波紋線、硬邊太陽高光與菲涅耳天空反射。
-- 從地形高度烘焙一張深度貼圖，用來決定淺水與深水的顏色，以及會隨時間呼吸的岸邊泡沫；挖出新池塘時會局部重新烘焙。
-
-### 天空、雲與粒子
-
-- 天空是一個帶漸層、太陽光暈和水彩橫向筆刷紋理的著色器球體。
-- 約 14 朵由多顆球體合併而成的立體白雲，雲底壓平，會隨風漂移並投下移動的陰影。
-- 陰影相機跟隨角色移動，讓近處的陰影維持足夠的解析度。
-- 花瓣使用 `InstancedMesh`，蒲公英絨毛使用 `Points` 搭配 Canvas 繪製的 sprite，兩者都會跟著風向飄落。
-- 採集、建造和收集星星時，會用一組共用的 `InstancedMesh` 迸發小粒子，並以 DOM 飄字顯示收穫。
-
-### 時間與色溫
-
-時間軸上有七組調色盤關鍵影格（清晨、早晨、正午、午後、黃昏、日落、入夜），依時間插值天空、太陽、半球光、霧與水色，再依色溫滑塊往冷調或暖調偏移。
+Your backpack, buildings, terrain edits and found star fragments are saved automatically to the browser's `localStorage` after every change, separately for each seed. Switching seeds saves the current world first, and returning to a seed loads its progress. "🧹 Clear this world's save" in the panel restores the world to its original state.
 
 ---
 
-## 專案結構
+## Rendering techniques
+
+### Terrain and lakes
+
+- A custom seedable 2D Simplex noise with layered fbm forms rolling hills, with a ring of mountains around the edge.
+- Each seed carves 2–3 lakes whose shore radius is perturbed with noise into irregular shapes; small stray hollows are filled so water only stays in the lakes.
+- Character height sampling uses exactly the same interpolation as the mesh triangulation, so the character never floats or sinks.
+- Ground color is a vertex-color blend by height, slope and noise (grass, flower fields, sandy shore, rock, lakebed), overlaid with a canvas-drawn watercolor brush texture.
+- Normals are computed by finite differences; sculpting only recomputes heights, normals, colors and water depth inside the brush area, and other systems update only the affected region.
+
+### Storybook toon shading
+
+- The whole scene uses `MeshToonMaterial` with a custom canvas-drawn gradient map (three tones with slightly softened boundaries).
+- The `HemisphereLight` sky and ground colors are tuned purple-blue, giving shadows a warm purple-blue tint instead of flat black.
+- Normals of tree canopies and clouds are "inflated" toward their centers so they catch light like single soft masses of color.
+- Lanterns, windows and stars share an emissive material and an additive glow sprite whose brightness follows the time of day.
+
+### Inverted-hull outlines
+
+- The vertex shader pushes vertices out along their normals and renders only back faces, producing a soft dark-brown outline.
+- Tree and rock outline meshes share the body's `instanceMatrix`, so sway animation and scaling stay in sync with the outline.
+
+### Wind-swept grass
+
+- Tens of thousands of grass clumps and four kinds of flowers (daisy, buttercup, cosmos, lavender) are rendered with `InstancedMesh`, split into 8×8 chunks for frustum culling.
+- The vertex shader is patched via `onBeforeCompile` to compute, in world space, waves of wind sweeping the meadow, fine jitter, and the character pushing grass aside.
+- Grass normals point up so grass and ground are lit consistently; back-face normals aren't flipped in double-sided rendering, avoiding dark backsides.
+- Picking a flower or flooding it just collapses that instance's matrix to a point — no need to rebuild the whole `InstancedMesh`.
+
+### Animated water
+
+- Vertices undulate with several sine waves.
+- The fragment shader offsets noise coordinates along the wind to draw cartoon ripple lines, a hard-edged sun highlight and a Fresnel sky reflection.
+- A depth map baked from the terrain height decides shallow vs. deep water color and drives breathing shore foam; digging a new pond rebakes it locally.
+
+### Sky, clouds and particles
+
+- The sky is a shader sphere with a gradient, sun glow and horizontal watercolor brush texture.
+- About 14 volumetric clouds, each merged from several spheres with flattened bottoms, drift with the wind and cast moving shadows.
+- The shadow camera follows the character so nearby shadows keep enough resolution.
+- Petals use `InstancedMesh` and dandelion fluff uses `Points` with a canvas-drawn sprite; both drift with the wind.
+- Gathering, building and collecting stars burst small particles from a shared `InstancedMesh`, with DOM floating text showing what you got.
+
+### Time and color temperature
+
+The timeline has seven palette keyframes (dawn, morning, noon, afternoon, dusk, sunset, night). Sky, sun, hemisphere light, fog and water colors are interpolated by time, then shifted cool or warm by the color-temperature slider.
+
+---
+
+## Project structure
 
 ```
 .
-├── index.html            # 完整的遊戲：HTML、CSS 與 JavaScript 都在這個檔案裡
-├── README.md
+├── index.html            # The whole game: HTML, CSS and JavaScript in one file
+├── README.md             # English
+├── README.zh-TW.md       # Traditional Chinese
+├── LICENSE
+├── .github/workflows/    # GitHub Pages deployment
 └── docs/
-    └── screenshots/      # README 使用的截圖
+    ├── demo/             # Feature demo GIFs
+    └── screenshots/      # Screenshots used in the README
 ```
 
-`index.html` 內的 JavaScript 依功能分成以下區塊：
+The JavaScript in `index.html` is organized into these sections:
 
-| 區塊 | 內容 |
+| Section | Contents |
 | --- | --- |
-| 0. 全域設定與小工具 | 世界尺寸、狀態與背包、亂數產生器、Simplex Noise |
-| 1. 繪本質感貼圖 | Toon 漸變貼圖、筆觸紋理、蒲公英 sprite、光暈與發光材質 |
-| 2. 共享著色器 | 風場草叢材質、Inverted Hull 描邊材質、幾何小工具 |
-| 3. 渲染器／場景／燈光／天空 | WebGLRenderer、半球光、太陽與陰影、天空球 |
-| 4. 地形 | 高度場生成、湖泊、局部更新、捏地形筆刷、存檔差異 |
-| 5. 水體 | 深度貼圖烘焙（可局部更新）、水面著色器 |
-| 6. 植被 | 草叢與小花的生成、摘花與重生、貼合地形 |
-| 7. 樹木／灌木／岩石 | 模型、採集節點、碰撞體、搖晃與恢復動畫 |
-| 8. 雲 | 立體雲的生成與漂移 |
-| 9. 粒子 | 花瓣與蒲公英絨毛 |
-| 10. 角色 | 小精靈模型、移動控制、滑翔、碰撞與動畫 |
-| 11. 互動回饋 | 迸發粒子、飄字、提示訊息 |
-| 12. 星之碎片 | 擺放規則、漂浮動畫、收集判定 |
-| 13. 建造與捏地形 | 建築模型、建造工具列、預覽與放置、地形同步、碰撞、採集、存檔 |
-| 14. 環境 | 時間調色盤、色溫與夜間發光 |
-| 15. 鏡頭／輸入 | 第三人稱鏡頭、鍵盤與滑鼠 |
-| 16. 世界生成 | 依種子重建整個世界並載入存檔 |
-| 17. UI 綁定 | 控制面板事件 |
-| 18. 主迴圈 | 每幀更新與渲染 |
+| 0. Globals and utilities | World size, state and backpack, RNG, Simplex noise |
+| 1. Storybook textures | Toon gradient maps, brush textures, dandelion sprite, glow and emissive materials |
+| 2. Shared shaders | Wind-field grass material, inverted-hull outline material, geometry helpers |
+| 3. Renderer / scene / lights / sky | WebGLRenderer, hemisphere light, sun and shadows, sky sphere |
+| 4. Terrain | Heightfield generation, lakes, local updates, sculpt brushes, save deltas |
+| 5. Water | Depth-map baking (locally updatable), water shader |
+| 6. Vegetation | Grass and flower generation, picking and regrowth, terrain fitting |
+| 7. Trees / bushes / rocks | Models, gather nodes, colliders, sway and recovery animation |
+| 8. Clouds | Volumetric cloud generation and drift |
+| 9. Particles | Petals and dandelion fluff |
+| 10. Character | Spirit model, movement, gliding, collision and animation |
+| 11. Feedback | Burst particles, floating text, prompts |
+| 12. Star fragments | Placement rules, floating animation, pickup detection |
+| 13. Building and sculpting | Building models, toolbar, preview and placement, terrain sync, collision, gathering, saving |
+| 14. Environment | Time-of-day palette, color temperature and night glow |
+| 15. Camera / input | Third-person camera, keyboard and mouse |
+| 16. World generation | Rebuild the whole world from a seed and load the save |
+| 17. UI bindings | Control panel events |
+| 18. Main loop | Per-frame update and render |
 
-### 依賴
+### Dependencies
 
-- [Three.js](https://threejs.org/) r160（含 `BufferGeometryUtils`），透過 CDN 載入
-- Google Fonts：Space Grotesk、Noto Sans TC（無法載入時會改用系統字型）
+- [Three.js](https://threejs.org/) r160 (including `BufferGeometryUtils`), loaded from a CDN
+- Google Fonts: Space Grotesk, Noto Sans TC (falls back to system fonts if unavailable)
 
+## License
 
-## 授權
-
-本專案以 [MIT License](LICENSE) 釋出。
+Released under the [MIT License](LICENSE).

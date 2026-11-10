@@ -295,3 +295,8 @@ http://localhost:8000/?seed=325863
 ## 授權
 
 本專案以 [MIT License](LICENSE) 釋出。
+
+---
+
+<!-- malilion-ecosystem-footer -->
+<p align="center"><sub>🦁 碼力獅 <a href="https://github.com/malilion">MaliLion</a> 生態系的一員 · <a href="https://malilion.com">malilion.com</a> · <a href="https://github.com/malilion?tab=repositories">更多作品</a></sub></p>

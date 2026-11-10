@@ -294,3 +294,8 @@ The JavaScript in `index.html` is organized into these sections:
 ## License
 
 Released under the [MIT License](LICENSE).
+
+---
+
+<!-- malilion-ecosystem-footer -->
+<p align="center"><sub>🦁 Part of the <a href="https://github.com/malilion">MaliLion</a> ecosystem · <a href="https://malilion.com">malilion.com</a> · <a href="https://github.com/malilion?tab=repositories">More projects</a></sub></p>
